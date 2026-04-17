@@ -166,7 +166,7 @@
         <div class="brand-tag">Juntos por tu bienestar</div>
       </div>
     </div>
-    <h1>Te llevamos a la <em>sucursal</em></h1>
+    <h1>Encontrá la <em>sucursal</em></h1>
   </div>
 
   <div class="body">
@@ -204,12 +204,12 @@
   const isAndroid = /android/i.test(ua);
   const isMobile  = isIOS || isAndroid;
 
-  // ── URLs por app ──
+  // ── URLs por app (muestran el punto en el mapa, no la ruta) ──
   const L = POINT.lat, G = POINT.lng, N = encodeURIComponent(POINT.name);
   const urls = {
-    googleWeb: `https://www.google.com/maps/dir/?api=1&destination=${L},${G}`,
-    waze:      `https://waze.com/ul?ll=${L},${G}&navigate=yes`,
-    apple:     `http://maps.apple.com/?daddr=${L},${G}&dirflg=d`,
+    googleWeb: `https://www.google.com/maps/search/?api=1&query=${L},${G}`,
+    waze:      `https://waze.com/ul?ll=${L},${G}`,
+    apple:     `http://maps.apple.com/?q=${N}&ll=${L},${G}`,
     geo:       `geo:${L},${G}?q=${L},${G}(${N})`
   };
 
@@ -231,7 +231,7 @@
     content.innerHTML = `
       <div class="redirect">
         <div class="spinner"></div>
-        <div class="redirect-text">Abriendo Google Maps...</div>
+        <div class="redirect-text">Mostrando en Google Maps...</div>
         <div class="redirect-sub">
           Si no abre automáticamente<br>
           <a href="${urls.googleWeb}">hacé clic aquí</a>
@@ -255,7 +255,7 @@
 
     content.innerHTML = `
       <div class="label">
-        <span>Elegí tu app</span>
+        <span>Ver en</span>
         <span class="device">${deviceLabel}</span>
       </div>
       ${apps.map(a => `
