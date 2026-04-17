@@ -3,109 +3,172 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meyko · Abriendo ubicación</title>
+<title>Meyko · Ver ubicación</title>
 <meta name="theme-color" content="#003f7d">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
     --meyko-blue:#003f7d;
+    --meyko-blue-dk:#002a55;
     --meyko-blue-lt:#e8f0f9;
     --meyko-gold:#f5b82e;
+    --meyko-gold-lt:#fff4d6;
+    --ink:#1a2338;
     --muted:#6a7489;
+    --bg:#fafbfd;
+    --card:#ffffff;
+    --line:#e4e8ef;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{
-    background:#fafbfd;
-    min-height:100vh;
-    font-family:'Montserrat',system-ui,sans-serif;
-    -webkit-font-smoothing:antialiased;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:24px;
+    background:var(--bg);color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    min-height:100vh;-webkit-font-smoothing:antialiased;
+    display:flex;align-items:center;justify-content:center;padding:20px;
     background-image:
       radial-gradient(circle at 0% 0%, rgba(0,63,125,.05) 0%, transparent 45%),
       radial-gradient(circle at 100% 100%, rgba(245,184,46,.07) 0%, transparent 45%);
   }
 
-  .center{
+  /* ═══ CARD MINIMAL (para Android/Desktop mientras redirige) ═══ */
+  .minimal{
     text-align:center;
     max-width:380px;
     animation:fadeIn .4s ease-out;
   }
-  @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-
-  .logo{
-    width:160px;
-    height:auto;
-    margin:0 auto 32px;
-    display:block;
+  .minimal .logo{
+    width:160px;height:auto;margin:0 auto 32px;display:block;
   }
-
-  .spinner{
-    width:42px; height:42px;
+  .minimal .spinner{
+    width:42px;height:42px;
     border:3px solid var(--meyko-blue-lt);
     border-top-color:var(--meyko-blue);
-    border-radius:50%;
-    margin:0 auto 20px;
+    border-radius:50%;margin:0 auto 20px;
     animation:spin 0.9s linear infinite;
   }
-  @keyframes spin{to{transform:rotate(360deg)}}
-
-  .title{
-    font-weight:600;
-    font-size:15px;
-    color:var(--meyko-blue);
-    margin-bottom:8px;
-    letter-spacing:.01em;
+  .minimal .title{
+    font-family:'Montserrat',sans-serif;font-weight:600;
+    font-size:15px;color:var(--meyko-blue);margin-bottom:8px;
   }
-  .sub{
-    font-weight:500;
-    font-size:13px;
-    color:var(--muted);
-    line-height:1.5;
+  .minimal .sub{
+    font-weight:500;font-size:13px;color:var(--muted);line-height:1.5;
   }
-  .sub a{
-    color:var(--meyko-blue);
-    font-weight:600;
-    text-decoration:underline;
+  .minimal .sub a{
+    color:var(--meyko-blue);font-weight:600;text-decoration:underline;
   }
-
-  /* Acento dorado abajo */
-  .accent{
-    margin-top:28px;
-    width:48px; height:3px;
+  .minimal .accent{
+    margin:28px auto 0;width:48px;height:3px;
     background:linear-gradient(90deg, var(--meyko-gold), #ffd97a);
     border-radius:2px;
-    margin-left:auto;
-    margin-right:auto;
   }
+
+  /* ═══ CARD iOS (con selector) ═══ */
+  .card{
+    width:100%;max-width:440px;background:var(--card);
+    border-radius:20px;overflow:hidden;
+    box-shadow:0 10px 40px rgba(0,63,125,.12);
+    animation:slideUp .4s cubic-bezier(.2,.8,.2,1);
+  }
+  .head{
+    background:linear-gradient(135deg, var(--meyko-blue) 0%, var(--meyko-blue-dk) 100%);
+    color:#fff;padding:22px 22px 28px;position:relative;overflow:hidden;
+  }
+  .head::before{
+    content:'';position:absolute;top:-60px;right:-60px;
+    width:200px;height:200px;
+    background:radial-gradient(circle, rgba(245,184,46,.2) 0%, transparent 70%);
+  }
+  .head::after{
+    content:'';position:absolute;bottom:0;left:0;right:0;height:4px;
+    background:linear-gradient(90deg, var(--meyko-gold) 0%, #ffd97a 50%, var(--meyko-gold) 100%);
+  }
+  .head-logo{
+    background:#fff;padding:10px 16px;border-radius:10px;
+    display:inline-block;margin-bottom:16px;
+    box-shadow:0 4px 12px rgba(0,0,0,.18);
+  }
+  .head-logo img{height:30px;width:auto;display:block}
+  .head h1{
+    font-family:'Montserrat',sans-serif;font-weight:700;
+    font-size:22px;letter-spacing:-0.015em;line-height:1.15;position:relative;
+  }
+  .head h1 em{font-style:normal;color:var(--meyko-gold)}
+
+  .body{padding:22px}
+  .point-card{
+    background:var(--meyko-blue-lt);
+    border-left:4px solid var(--meyko-gold);
+    border-radius:10px;padding:14px 16px;margin-bottom:22px;
+  }
+  .point-name{
+    font-family:'Montserrat',sans-serif;font-weight:700;
+    font-size:16px;color:var(--meyko-blue);margin-bottom:4px;
+  }
+  .point-coords{
+    font-family:'Inter',monospace;font-size:11.5px;
+    color:var(--muted);letter-spacing:.02em;
+  }
+  .label{
+    font-family:'Montserrat',sans-serif;font-size:10.5px;font-weight:700;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+    margin-bottom:10px;display:flex;align-items:center;gap:8px;
+  }
+  .label .device{
+    background:var(--meyko-gold-lt);color:#b8850f;
+    padding:2px 8px;border-radius:8px;font-size:9.5px;
+  }
+  .app-btn{
+    display:flex;align-items:center;justify-content:space-between;
+    width:100%;padding:13px 14px;background:var(--card);
+    border:1.5px solid var(--line);border-radius:12px;
+    font-family:'Montserrat',sans-serif;font-weight:600;font-size:14px;
+    color:var(--ink);text-decoration:none;margin-bottom:8px;
+    transition:all .15s;
+  }
+  .app-btn:last-child{margin-bottom:0}
+  .app-btn:hover,.app-btn:active{
+    border-color:var(--meyko-blue);background:var(--meyko-blue-lt);
+    transform:translateX(3px);
+  }
+  .app-btn-left{display:flex;align-items:center;gap:12px}
+  .app-btn .ico{
+    width:34px;height:34px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .app-btn .ico svg{width:18px;height:18px}
+  .app-btn .arrow{
+    color:var(--muted);font-size:18px;transition:transform .15s, color .15s;
+  }
+  .app-btn:hover .arrow,.app-btn:active .arrow{
+    color:var(--meyko-blue);transform:translateX(3px);
+  }
+  .ico-google{background:#e8f0fe;color:#1a73e8}
+  .ico-waze{background:#e6f9ff;color:#05c8f7}
+  .ico-apple{background:#f2f2f7;color:#1a2338}
+  .ico-uber{background:#1a2338;color:#fff}
+
+  .foot{
+    text-align:center;padding:14px 22px 18px;border-top:1px solid var(--line);
+    font-size:10.5px;font-weight:500;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .foot span{color:var(--meyko-gold)}
+
+  @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
 
-<div class="center">
-  <img class="logo"
-       src="https://meyko.com/web/image/website/2/logo/Meyko?unique=bdfdf4e"
-       alt="Meyko"
-       onerror="this.style.display='none'">
-
-  <div class="spinner"></div>
-  <div class="title" id="title">Abriendo ubicación...</div>
-  <div class="sub" id="sub">
-    Si no abre automáticamente,<br>
-    <a href="#" id="fallback">tocá aquí</a>
-  </div>
-
-  <div class="accent"></div>
-</div>
+<div id="root"></div>
 
 <script>
   // ═══════════════════════════════════════════════════════════
-  // CONFIGURACIÓN - Pasá los datos por URL:
-  // ?name=Mey-Ko+Bermejo&lat=15.5322675&lng=-88.0201474
+  // CONFIGURACIÓN
+  // URL: ?name=Mey-Ko+Bermejo&lat=15.5322675&lng=-88.0201474
   // ═══════════════════════════════════════════════════════════
   const POINT = {
     name: 'Sucursal Meyko',
@@ -120,6 +183,8 @@
     POINT.lng  = parseFloat(params.get('lng'));
   }
 
+  const LOGO = 'https://meyko.com/web/image/website/2/logo/Meyko?unique=bdfdf4e';
+
   // ── Detección ──
   const ua = navigator.userAgent;
   const isIOS     = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -127,38 +192,140 @@
 
   const L = POINT.lat, G = POINT.lng, N = encodeURIComponent(POINT.name);
 
-  let targetUrl;
+  // ── URLs ──
+  const urls = {
+    // Web universal
+    googleWeb:  `https://www.google.com/maps/search/?api=1&query=${L},${G}`,
+    wazeWeb:    `https://waze.com/ul?ll=${L},${G}`,
+    appleWeb:   `http://maps.apple.com/?q=${N}&ll=${L},${G}`,
+    // Schemes iOS (abren app si está instalada)
+    googleApp:  `comgooglemaps://?q=${L},${G}&center=${L},${G}`,
+    wazeApp:    `waze://?ll=${L},${G}`,
+    uberApp:    `uber://?action=setPickup&pickup=my_location&dropoff[latitude]=${L}&dropoff[longitude]=${G}&dropoff[nickname]=${N}`,
+    // Android geo: (dispara selector nativo del sistema)
+    geo:        `geo:${L},${G}?q=${L},${G}(${N})`
+  };
+
+  // ═══════════════════════════════════════════════════════════
+  // RENDER
+  // ═══════════════════════════════════════════════════════════
+  const root = document.getElementById('root');
 
   if (isAndroid) {
-    // Android: geo: dispara el selector nativo del sistema
-    // (Google Maps, Waze, etc - el usuario elige)
-    targetUrl = `geo:${L},${G}?q=${L},${G}(${N})`;
+    // ── ANDROID: redirige invisible al selector nativo ──
+    renderMinimal('Abriendo selector...', urls.geo, urls.googleWeb);
+    setTimeout(() => { location.href = urls.geo; }, 400);
 
-  } else if (isIOS) {
-    // iOS: maps:// abre Apple Maps; si tiene Google Maps/Waze instalado
-    // y registrado, iOS puede preguntar con cuál abrir
-    targetUrl = `maps://?q=${N}&ll=${L},${G}`;
+  } else if (!isIOS) {
+    // ── DESKTOP: Google Maps directo ──
+    renderMinimal('Abriendo Google Maps...', urls.googleWeb, urls.googleWeb);
+    setTimeout(() => { location.href = urls.googleWeb; }, 500);
 
   } else {
-    // Desktop: Google Maps web
-    targetUrl = `https://www.google.com/maps/search/?api=1&query=${L},${G}`;
+    // ── iOS: selector con botones ──
+    renderIOS();
   }
 
-  // ── Fallback link visible ──
-  const fallbackUrl = `https://www.google.com/maps/search/?api=1&query=${L},${G}`;
-  document.getElementById('fallback').href = fallbackUrl;
+  function renderMinimal(titleText, redirectUrl, fallbackUrl) {
+    root.innerHTML = `
+      <div class="minimal">
+        <img class="logo" src="${LOGO}" alt="Meyko" onerror="this.style.display='none'">
+        <div class="spinner"></div>
+        <div class="title" id="title">${titleText}</div>
+        <div class="sub" id="sub">
+          Si no abre automáticamente,<br>
+          <a href="${fallbackUrl}">tocá aquí</a>
+        </div>
+        <div class="accent"></div>
+      </div>
+    `;
+    // Fallback si tras 2.5s sigue visible
+    setTimeout(() => {
+      const t = document.getElementById('title');
+      const s = document.getElementById('sub');
+      if (t) t.textContent = '¿No se abrió ninguna app?';
+      if (s) s.innerHTML = '<a href="' + fallbackUrl + '">Abrir en Google Maps</a>';
+    }, 2500);
+  }
 
-  // ── Redirigir ──
-  setTimeout(() => {
-    location.href = targetUrl;
-  }, 400);
+  function renderIOS() {
+    const ICONS = {
+      google: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C7.58 2 4 5.58 4 10c0 5.25 7 12 8 12s8-6.75 8-12c0-4.42-3.58-8-8-8zm0 11a3 3 0 110-6 3 3 0 010 6z"/></svg>',
+      waze:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.54 11.06A9 9 0 0 0 3.46 11.06c.76 2 1.41 3 2.54 4a7 7 0 0 1 1 2l.5 2h1m7-2h1l.5-2a7 7 0 0 1 1-2c1.13-1 1.78-2 2.54-4"/><circle cx="8.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="15.5" cy="10.5" r=".5" fill="currentColor"/><path d="M9 15s1 1 3 1 3-1 3-1"/></svg>',
+      apple:  '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm4.5 6.5l-2.5 7-7 2.5 2.5-7 7-2.5z"/></svg>',
+      uber:   '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="18" height="18" rx="3"/><rect x="7" y="10" width="10" height="4" fill="#fff" rx="0.5"/></svg>'
+    };
 
-  // ── Si después de 2.5s seguimos acá, mostrar fallback ──
-  setTimeout(() => {
-    document.getElementById('title').textContent = '¿No se abrió ninguna app?';
-    document.getElementById('sub').innerHTML =
-      '<a href="' + fallbackUrl + '">Abrir en Google Maps</a>';
-  }, 2500);
+    const apps = [
+      { key: 'apple',  label: 'Apple Maps',  url: urls.appleWeb },
+      { key: 'google', label: 'Google Maps', url: urls.googleApp, fallback: urls.googleWeb },
+      { key: 'waze',   label: 'Waze',        url: urls.wazeApp,   fallback: urls.wazeWeb },
+      { key: 'uber',   label: 'Uber',        url: urls.uberApp }
+    ];
+
+    root.innerHTML = `
+      <div class="card">
+        <div class="head">
+          <div class="head-logo">
+            <img src="${LOGO}" alt="Meyko" onerror="this.parentElement.style.display='none'">
+          </div>
+          <h1>Ver <em>ubicación</em></h1>
+        </div>
+
+        <div class="body">
+          <div class="point-card">
+            <div class="point-name">${escapeHtml(POINT.name)}</div>
+            <div class="point-coords">${L.toFixed(5)}, ${G.toFixed(5)}</div>
+          </div>
+
+          <div class="label">
+            <span>Abrir con</span>
+            <span class="device">iOS</span>
+          </div>
+
+          ${apps.map(a => `
+            <a class="app-btn"
+               href="${a.url}"
+               ${a.fallback ? `data-fallback="${a.fallback}"` : ''}
+               onclick="tryOpen(event, this)">
+              <span class="app-btn-left">
+                <span class="ico ico-${a.key}">${ICONS[a.key]}</span>
+                <span>${a.label}</span>
+              </span>
+              <span class="arrow">→</span>
+            </a>
+          `).join('')}
+        </div>
+
+        <div class="foot">Meyko <span>·</span> Honduras</div>
+      </div>
+    `;
+  }
+
+  // Intenta abrir app; si no está instalada, cae al fallback web
+  function tryOpen(ev, el) {
+    const fallback = el.getAttribute('data-fallback');
+    if (!fallback) return; // Sin fallback: solo abre el href normal
+    ev.preventDefault();
+
+    const started = Date.now();
+    const hidden = () => document.hidden || document.webkitHidden;
+
+    // Intenta abrir la app
+    location.href = el.href;
+
+    // Si después de 1.5s la página sigue visible, significa que la app
+    // no estaba instalada → abrir fallback web
+    setTimeout(() => {
+      if (!hidden() && Date.now() - started < 2000) {
+        location.href = fallback;
+      }
+    }, 1500);
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
 </script>
 
 </body>
